@@ -1,0 +1,15 @@
+
+/*   trikalon-nea   */
+
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+}
+
+article {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+}
