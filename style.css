@@ -13,3 +13,25 @@ article {
     padding: 15px;
     margin-bottom: 15px;
 }
+
+/* ------------------------------------------ */
+/* Κουμπιά μεγέθους γραμματοσειράς */
+#increaseFont,
+#decreaseFont {
+position: fixed;
+bottom: 20px;
+width: 150px;
+height: 60px;
+font-size: 20px;
+font-weight: bold;
+cursor: pointer;
+z-index: 1000;
+}
+
+#increaseFont {
+right: 20px;
+}
+
+#decreaseFont {
+left: 20px;
+}
