@@ -33,6 +33,16 @@ localStorage.setItem("fontSize", fontSize);
 
 decreaseButton.addEventListener("click", function () {
 fontSize = Number(fontSize) - 2;
+
+// ---------------------------------------------
+// Πάτημα στον τίτλο → αναπαραγωγή του MP3
+
+document.querySelectorAll(".audio-title").forEach(title => {
+    title.addEventListener("click", function () {
+        const audio = this.nextElementSibling;
+        audio.play();
+    });
+});
 document.body.style.fontSize = fontSize + "px";
 localStorage.setItem("fontSize", fontSize);
 });
