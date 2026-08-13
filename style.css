@@ -10,8 +10,8 @@ body {
 
 article {
     border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 15px;
+    padding: 10px; /* ήταν 15 */
+    margin-bottom: 25px; /* ήταν 15 */
 }
 
 /* ------------------------------------------ */
