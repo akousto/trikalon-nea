@@ -11,7 +11,7 @@ body {
 article {
     border: 1px solid #ccc;
     padding: 10px; /* ήταν 15 */
-    margin-bottom: 25px; /* ήταν 15 */
+    margin-bottom: 10px; /* ήταν 15 */
 }
 
 /* ------------------------------------------ */
