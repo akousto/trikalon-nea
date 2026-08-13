@@ -31,6 +31,13 @@ z-index: 1000;
 #increaseFont {
 right: 20px;
 }
+/* ------------------------------------------ */
+/* Τίτλος άρθρου που αναπαράγεται */
+
+.audio-title.playing {
+    color: #d00000;
+    cursor: pointer;
+}
 
 #decreaseFont {
 left: 20px;
