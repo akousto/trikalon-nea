@@ -12,6 +12,7 @@ article {
     border: 1px solid #ccc;
     padding: 5px; /* ήταν 15 */
     margin-bottom: 5px; /* ήταν 15 */
+    background-color: hsla(0, 100%, 50%, 0.1);
 }
 
 /* ------------------------------------------ */
