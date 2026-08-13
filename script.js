@@ -37,11 +37,18 @@ fontSize = Number(fontSize) - 2;
 // ---------------------------------------------
 // Πάτημα στον τίτλο → αναπαραγωγή του MP3
 
-document.querySelectorAll(".audio-title").forEach(title => {
-    title.addEventListener("click", function () {
-        const audio = this.nextElementSibling;
-        audio.play();
-    });
+// ---------------------------------------------
+// Πάτημα στον τίτλο → αναπαραγωγή του MP3
+
+document.addEventListener("click", function (event) {
+    const title = event.target.closest(".audio-title");
+
+    if (!title) return;
+
+    const article = title.closest("article");
+    const audio = article.querySelector("audio");
+
+    audio.play();
 });
 document.body.style.fontSize = fontSize + "px";
 localStorage.setItem("fontSize", fontSize);
