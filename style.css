@@ -31,6 +31,11 @@ z-index: 1000;
 #increaseFont {
 right: 20px;
 }
+
+#decreaseFont {
+left: 20px;
+}
+
 /* ------------------------------------------ */
 /* Τίτλος άρθρου που αναπαράγεται */
 
@@ -39,6 +44,3 @@ right: 20px;
     cursor: pointer;
 }
 
-#decreaseFont {
-left: 20px;
-}
