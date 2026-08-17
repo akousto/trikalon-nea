@@ -48,5 +48,5 @@ left: 20px;
 /* ------------------------------------------ */
 /* Πλαίσιο άρθρου που αναπαράγεται πιο γαλάζιο*/
 article:has(.audio-title.playing) {
-    background-color: #CFEAF5;
+    background-color: #8db5cc;     /* ήταν #CFEAF5  */
 }
