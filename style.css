@@ -45,3 +45,8 @@ left: 20px;
     cursor: pointer;
 }
 
+/* ------------------------------------------ */
+/* Πλαίσιο άρθρου που αναπαράγεται πιο γαλάζιο*/
+article:has(.audio-title.playing) {
+    background-color: #CFEAF5;
+}
