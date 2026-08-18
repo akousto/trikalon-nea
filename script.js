@@ -46,36 +46,3 @@ fontSize = Number(fontSize) - 2;
 document.body.style.fontSize = fontSize + "px";
 localStorage.setItem("fontSize", fontSize);
 });
-
-
-// ---------------------------------------------
-// Φόρτωση άρθρων από το articles.json
-
-fetch("articles.json")
-    .then(response => response.json())
-    .then(articles => {
-
-        const container = document.getElementById("articles");
-
-        articles.forEach(articleData => {
-
-            const article = document.createElement("article");
-
-            const title = document.createElement("h2");
-            title.className = "audio-title";
-            title.textContent = articleData.title;
-
-            const audio = document.createElement("audio");
-
-            const source = document.createElement("source");
-            source.src = articleData.audio;
-            source.type = "audio/mpeg";
-
-            audio.appendChild(source);
-            article.appendChild(title);
-            article.appendChild(audio);
-
-            container.appendChild(article);
-        });
-
-    });
