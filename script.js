@@ -1,3 +1,6 @@
+
+console.log("Το script.js φορτώθηκε");
+
 // ---------------------------------------------
 // Όταν πατώ play τότε stop σε όλα τα άλα mp3
 document.querySelectorAll("audio").forEach(audio => {
