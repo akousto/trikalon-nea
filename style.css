@@ -13,6 +13,7 @@ article {
     padding: 5px; /* ήταν 15 */
     margin-bottom: 5px; /* ήταν 15 */
     background-color: #E4F1F7;
+    line-height: 1.6;  /* το έβαλα 20-Αυγ-2026 */
 }
 
 /* ------------------------------------------ */
