@@ -41,7 +41,7 @@ left: 20px;
 /* Τίτλος άρθρου που αναπαράγεται */
 
 .audio-title.playing {
-    color: #d00000;
+    color: #1A365D;  /* ήταν d00000 */
     cursor: pointer;
 }
 
