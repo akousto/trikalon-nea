@@ -9,11 +9,7 @@ body {
 }
 
 h2 {
-  /*  margin-top: 10px;  
-  margin-bottom: 10px; 
-  margin-right: 5px;
-  margin-left: 0px;    τα έβαλα 21-Αυγ-2026 */
- margin: 10px 10px 5px 0px; /* το έβαλα 21-Αυγ-2026 */
+   margin: 10px 10px 5px 0px; /* το έβαλα 21-Αυγ-2026 */
 }
 
 article {
@@ -21,8 +17,6 @@ article {
     padding: 5px; /* ήταν 15 */
     margin-bottom: 5px; /* ήταν 15 */
     background-color: #E4F1F7; /*  E4F1F7  */
-    text-indent: 5px;  /* 1η γραμμή  */
-    padding-left: -40px   /* όλη η παράγραφος 0em */
     font-size: 18px;   /* το έβαλα 20-Αυγ-2026 */
     line-height: 1.6;  /* το έβαλα 20-Αυγ-2026 */
     cursor: pointer;   /* το έβαλα 21-Αυγ-2026 */
@@ -48,6 +42,14 @@ right: 20px;
 
 #decreaseFont {
 left: 20px;
+}
+
+/* ------------------------------------------ */
+/* Τίτλος άρθρου */
+
+.audio-title {
+    padding-left: 30px;
+    text-indent: -30px;
 }
 
 /* ------------------------------------------ */
