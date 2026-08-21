@@ -8,6 +8,14 @@ body {
     padding: 10px;
 }
 
+h2 {
+  /*  margin-top: 10px;  
+  margin-bottom: 10px; 
+  margin-right: 5px;
+  margin-left: 0px;    τα έβαλα 21-Αυγ-2026 */
+ margin: 10px 10px 5px 0px; /* το έβαλα 21-Αυγ-2026 */
+}
+
 article {
     border: 1px solid #ccc;
     padding: 5px; /* ήταν 15 */
@@ -17,6 +25,7 @@ article {
     padding-left: 40px   /* όλη η παράγραφος 0em */
     font-size: 18px;   /* το έβαλα 20-Αυγ-2026 */
     line-height: 1.6;  /* το έβαλα 20-Αυγ-2026 */
+    cursor: pointer;   /* το έβαλα 21-Αυγ-2026 */
 }
 
 /* ------------------------------------------ */
