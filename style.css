@@ -14,7 +14,7 @@ article {
     margin-bottom: 5px; /* ήταν 15 */
     background-color: #E4F1F7; /*  E4F1F7  */
     text-indent: -20px;  /* 1η γραμμή  */
-    padding-left: 20px   /* όλη η παράγραφος 0em */
+    padding-left: 40px   /* όλη η παράγραφος 0em */
     font-size: 18px;   /* το έβαλα 20-Αυγ-2026 */
     line-height: 1.6;  /* το έβαλα 20-Αυγ-2026 */
 }
