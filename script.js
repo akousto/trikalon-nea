@@ -37,6 +37,36 @@ localStorage.setItem("fontSize", fontSize);
 decreaseButton.addEventListener("click", function () {
 fontSize = Number(fontSize) - 2;
 
+
+ // ---------------------------------------------
+        // Σύρσιμο δεξιά - αριστερά πάνω στο άρθρο
+        // Μετακίνηση μέσα στο MP3
+        document.querySelectorAll("article").forEach(article => {
+            let startX = 0;
+            article.addEventListener("touchstart", function (event) {
+                startX = event.touches[0].clientX;
+            });
+            article.addEventListener("touchend", function (event) {
+                const endX = event.changedTouches[0].clientX;
+                const difference = endX - startX;
+                const audio = article.querySelector("audio");
+         
+                // Λειτουργεί μόνο όταν το MP3 παίζει
+                if (audio.paused) return;
+            
+                // Σύρσιμο δεξιά
+                if (difference > 50) {
+                    audio.currentTime += 5;
+                }
+
+                // Σύρσιμο αριστερά
+                if (difference < -50) {
+                    audio.currentTime -= 5;
+                }
+            });
+        });
+
+    
 // ---------------------------------------------
 // Πάτημα στον τίτλο → αναπαραγωγή του MP3
 
