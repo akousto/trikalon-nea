@@ -38,34 +38,39 @@ decreaseButton.addEventListener("click", function () {
 fontSize = Number(fontSize) - 2;
 
 
- // ---------------------------------------------
-        // Σύρσιμο δεξιά - αριστερά πάνω στο άρθρο
-        // Μετακίνηση μέσα στο MP3
-        document.querySelectorAll("article").forEach(article => {
-            let startX = 0;
-            article.addEventListener("touchstart", function (event) {
-                startX = event.touches[0].clientX;
-            });
-            article.addEventListener("touchend", function (event) {
-                const endX = event.changedTouches[0].clientX;
-                const difference = endX - startX;
-                const audio = article.querySelector("audio");
-         
-                // Λειτουργεί μόνο όταν το MP3 παίζει
-                if (audio.paused) return;
-            
-                // Σύρσιμο δεξιά
-                if (difference > 50) {
-                    audio.currentTime += 5;
-                }
 
-                // Σύρσιμο αριστερά
-                if (difference < -50) {
-                    audio.currentTime -= 5;
-                }
-            });
+        // ---------------------------------------------
+        // Οριζόντια κίνηση πάνω στο άρθρο
+        // Μετακίνηση σε οποιοδήποτε σημείο του MP3
+
+        document.querySelectorAll("article").forEach(article => {
+            article.addEventListener("touchmove", function (event) {
+                const audio = article.querySelector("audio");
+
+                // Λειτουργεί μόνο όταν παίζει το συγκεκριμένο MP3
+                if (audio.paused) return;
+
+                // Αν δεν γνωρίζουμε ακόμη τη διάρκεια
+                if (!audio.duration) return;
+                const touch = event.touches[0];
+                const rect = article.getBoundingClientRect();
+
+                // Θέση του δαχτύλου μέσα στο πλαίσιο
+                let position = touch.clientX - rect.left;
+
+                // Ποσοστό της οριζόντιας θέσης
+                let percentage = position / rect.width;
+
+                // Περιορισμός από 0 έως 1
+                percentage = Math.max(0, Math.min(1, percentage));
+
+                // Μετακίνηση στο αντίστοιχο σημείο του MP3
+                audio.currentTime = audio.duration * percentage;
+            }, { passive: true });
         });
 
+
+    
     
 // ---------------------------------------------
 // Πάτημα στον τίτλο → αναπαραγωγή του MP3
