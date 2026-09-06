@@ -101,39 +101,84 @@ fetch("articles.json")
         });
 
 
+          // ---------------------------------------------
+// Σύρσιμο δακτύλου πάνω στο άρθρο
+// Αριστερά - δεξιά = θέση στο MP3
+// Πάνω - κάτω = ένταση ήχου
+
+document.querySelectorAll("article").forEach(article => {
+
+    let startX = 0;
+    let startY = 0;
+
+    article.addEventListener("touchstart", function (event) {
+
+        const touch = event.touches[0];
+
+        startX = touch.clientX;
+        startY = touch.clientY;
+
+    }, { passive: true });
+
+
+    article.addEventListener("touchmove", function (event) {
+
+        const audio = article.querySelector("audio");
+
+        // Λειτουργεί μόνο όταν παίζει το συγκεκριμένο MP3
+        if (audio.paused) return;
+
+        const touch = event.touches[0];
+
+        const moveX = touch.clientX - startX;
+        const moveY = touch.clientY - startY;
+
+
         // ---------------------------------------------
-        // Οριζόντια κίνηση πάνω στο άρθρο
-        // Μετακίνηση σε οποιοδήποτε σημείο του MP3
+        // Αν η κίνηση είναι περισσότερο οριζόντια
 
-        document.querySelectorAll("article").forEach(article => {
+        if (Math.abs(moveX) > Math.abs(moveY)) {
 
-            article.addEventListener("touchmove", function (event) {
+            // Αν δεν γνωρίζουμε ακόμη τη διάρκεια
+            if (!audio.duration) return;
 
-                const audio = article.querySelector("audio");
+            const rect = article.getBoundingClientRect();
 
-                // Λειτουργεί μόνο όταν παίζει το συγκεκριμένο MP3
-                if (audio.paused) return;
+            let position = touch.clientX - rect.left;
 
-                // Αν δεν γνωρίζουμε ακόμη τη διάρκεια
-                if (!audio.duration) return;
+            let percentage = position / rect.width;
 
-                const touch = event.touches[0];
-                const rect = article.getBoundingClientRect();
+            percentage = Math.max(0, Math.min(1, percentage));
 
-                // Θέση του δαχτύλου μέσα στο πλαίσιο
-                let position = touch.clientX - rect.left;
+            // Μετακίνηση στο MP3
+            audio.currentTime = audio.duration * percentage;
 
-                // Ποσοστό της οριζόντιας θέσης
-                let percentage = position / rect.width;
+        }
 
-                // Περιορισμός από 0 έως 1
-                percentage = Math.max(0, Math.min(1, percentage));
 
-                // Μετακίνηση στο αντίστοιχο σημείο του MP3
-                audio.currentTime = audio.duration * percentage;
+        // ---------------------------------------------
+        // Αν η κίνηση είναι περισσότερο κατακόρυφη
 
-            }, { passive: true });
+        else {
 
-        });
+            // Πάνω = μεγαλύτερη ένταση
+            // Κάτω = μικρότερη ένταση
 
-    });
+            const change = -moveY / 300;
+
+            let newVolume = audio.volume + change;
+
+            // Περιορισμός από 0 έως 1
+            newVolume = Math.max(0, Math.min(1, newVolume));
+
+            audio.volume = newVolume;
+
+            // Νέα αρχική θέση για ομαλή αλλαγή
+            startY = touch.clientY;
+
+        }
+
+    }, { passive: true });
+
+});
+        
