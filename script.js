@@ -91,6 +91,15 @@ fetch("articles.json")
         // Οριζόντια κίνηση πάνω στο άρθρο
         // Μετακίνηση σε οποιοδήποτε σημείο του MP3
 
+
+document.querySelectorAll("article").forEach(article => {
+
+    article.addEventListener("touchmove", function (event) {
+
+
+
+// ---------------------------------------------        
+// ---------------------------------------------        
 // ---------------------------------------------
 // Σύρσιμο δακτύλου πάνω στο άρθρο
 // Αριστερά - δεξιά = θέση στο MP3
@@ -151,28 +160,6 @@ document.querySelectorAll("article").forEach(article => {
 
     }, { passive: true });
 });
-                const audio = article.querySelector("audio");
 
-                // Λειτουργεί μόνο όταν παίζει το συγκεκριμένο MP3
-                if (audio.paused) return;
-
-                // Αν δεν γνωρίζουμε ακόμη τη διάρκεια
-                if (!audio.duration) return;
-                const touch = event.touches[0];
-                const rect = article.getBoundingClientRect();
-
-                // Θέση του δαχτύλου μέσα στο πλαίσιο
-                let position = touch.clientX - rect.left;
-
-                // Ποσοστό της οριζόντιας θέσης
-                let percentage = position / rect.width;
-
-                // Περιορισμός από 0 έως 1
-                percentage = Math.max(0, Math.min(1, percentage));
-
-                // Μετακίνηση στο αντίστοιχο σημείο του MP3
-                audio.currentTime = audio.duration * percentage;
-
-            }, { passive: true });
         });
     });
