@@ -26,7 +26,6 @@ decreaseButton.addEventListener("click", function () {
     localStorage.setItem("fontSize", fontSize);
 });
 
-
 // ---------------------------------------------
 // Φόρτωση άρθρων από το articles.json
 
@@ -85,11 +84,8 @@ fetch("articles.json")
                 audio.addEventListener("ended", function () {
                     title.classList.remove("playing");
                 });
-
             });
-
         });
-
 
         // ---------------------------------------------
         // Οριζόντια κίνηση πάνω στο άρθρο
@@ -106,27 +102,19 @@ document.querySelectorAll("article").forEach(article => {
     let startY = 0;
 
     article.addEventListener("touchstart", function (event) {
-
         const touch = event.touches[0];
-
         startX = touch.clientX;
         startY = touch.clientY;
-
     }, { passive: true });
 
-
     article.addEventListener("touchmove", function (event) {
-
         const audio = article.querySelector("audio");
 
         // Λειτουργεί μόνο όταν παίζει το συγκεκριμένο MP3
         if (audio.paused) return;
-
         const touch = event.touches[0];
-
         const moveX = touch.clientX - startX;
         const moveY = touch.clientY - startY;
-
 
         // ---------------------------------------------
         // Αν η κίνηση είναι περισσότερο οριζόντια
@@ -135,47 +123,34 @@ document.querySelectorAll("article").forEach(article => {
 
             // Αν δεν γνωρίζουμε ακόμη τη διάρκεια
             if (!audio.duration) return;
-
             const rect = article.getBoundingClientRect();
-
             let position = touch.clientX - rect.left;
-
             let percentage = position / rect.width;
-
             percentage = Math.max(0, Math.min(1, percentage));
 
             // Μετακίνηση στο MP3
             audio.currentTime = audio.duration * percentage;
-
         }
-
 
         // ---------------------------------------------
         // Αν η κίνηση είναι περισσότερο κατακόρυφη
 
         else {
-
             // Πάνω = μεγαλύτερη ένταση
             // Κάτω = μικρότερη ένταση
-
             const change = -moveY / 300;
-
             let newVolume = audio.volume + change;
 
             // Περιορισμός από 0 έως 1
             newVolume = Math.max(0, Math.min(1, newVolume));
-
             audio.volume = newVolume;
 
             // Νέα αρχική θέση για ομαλή αλλαγή
             startY = touch.clientY;
-
         }
 
     }, { passive: true });
-
 });
-
                 const audio = article.querySelector("audio");
 
                 // Λειτουργεί μόνο όταν παίζει το συγκεκριμένο MP3
@@ -183,7 +158,6 @@ document.querySelectorAll("article").forEach(article => {
 
                 // Αν δεν γνωρίζουμε ακόμη τη διάρκεια
                 if (!audio.duration) return;
-
                 const touch = event.touches[0];
                 const rect = article.getBoundingClientRect();
 
@@ -200,7 +174,5 @@ document.querySelectorAll("article").forEach(article => {
                 audio.currentTime = audio.duration * percentage;
 
             }, { passive: true });
-
         });
-
     });
