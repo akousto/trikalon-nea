@@ -33,7 +33,6 @@ fetch("articles.json")
 .then(response => response.json())
 .then(articles => {
 
-```
     const container = document.getElementById("articles");
 
 
@@ -284,7 +283,7 @@ fetch("articles.json")
 
 
     });
+});
 
 
 });
-```
