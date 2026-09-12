@@ -9,23 +9,22 @@ const decreaseButton = document.getElementById("decreaseFont");
 let fontSize = localStorage.getItem("fontSize");
 
 if (fontSize === null) {
-    fontSize = 22;
+fontSize = 22;
 }
 
 document.body.style.fontSize = fontSize + "px";
 
 increaseButton.addEventListener("click", function () {
-    fontSize = Number(fontSize) + 2;
-    document.body.style.fontSize = fontSize + "px";
-    localStorage.setItem("fontSize", fontSize);
+fontSize = Number(fontSize) + 2;
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("fontSize", fontSize);
 });
 
 decreaseButton.addEventListener("click", function () {
-    fontSize = Number(fontSize) - 2;
-    document.body.style.fontSize = fontSize + "px";
-    localStorage.setItem("fontSize", fontSize);
+fontSize = Number(fontSize) - 2;
+document.body.style.fontSize = fontSize + "px";
+localStorage.setItem("fontSize", fontSize);
 });
-
 
 // ---------------------------------------------
 // Φόρτωση άρθρων από το articles.json
@@ -34,242 +33,237 @@ fetch("articles.json")
 .then(response => response.json())
 .then(articles => {
 
-    const container = document.getElementById("articles");
+```
+const container = document.getElementById("articles");
+
+
+// ---------------------------------------------
+// Δημιουργία άρθρων
+
+articles.forEach(articleData => {
+
+    const article = document.createElement("article");
+
+    // Τίτλος
+    const title = document.createElement("h2");
+
+    title.className = "audio-title";
+
+    title.textContent = articleData.title;
 
 
     // ---------------------------------------------
-    // Δημιουργία άρθρων
+    // Μπάρα προόδου
 
-    articles.forEach(articleData => {
+    const progressBar = document.createElement("div");
 
-        const article = document.createElement("article");
+    progressBar.className = "progress-bar";
 
-        // Τίτλος
-        const title = document.createElement("h2");
+    // Η μπάρα αρχικά είναι κρυφή
+    progressBar.style.display = "none";
 
-        title.className = "audio-title";
+    const progress = document.createElement("div");
 
-        title.textContent = articleData.title;
+    progress.className = "progress";
 
-
-        // ---------------------------------------------
-        // Μπάρα προόδου
-
-        const progressBar = document.createElement("div");
-
-        progressBar.className = "progress-bar";
-
-        const progress = document.createElement("div");
-
-        progress.className = "progress";
-
-        progressBar.appendChild(progress);
-
-
-        // ---------------------------------------------
-        // Audio
-
-        const audio = document.createElement("audio");
-
-        const source = document.createElement("source");
-
-        source.src = articleData.audio;
-
-        source.type = "audio/mpeg";
-
-        audio.appendChild(source);
-
-
-        // ---------------------------------------------
-        // Προσθήκη στο άρθρο
-
-        article.appendChild(title);
-
-        article.appendChild(progressBar);
-
-        article.appendChild(audio);
-
-        container.appendChild(article);
-
-    });
+    progressBar.appendChild(progress);
 
 
     // ---------------------------------------------
-    // Πάτημα στον τίτλο → play / stop
+    // Audio
 
-    document.querySelectorAll(".audio-title").forEach(title => {
+    const audio = document.createElement("audio");
 
-        title.addEventListener("click", function () {
+    const source = document.createElement("source");
 
-            const article = this.closest("article");
+    source.src = articleData.audio;
 
-            const audio = article.querySelector("audio");
+    source.type = "audio/mpeg";
 
-
-            // ---------------------------------------------
-            // Αν αυτό το MP3 παίζει ήδη → STOP
-
-            if (!audio.paused) {
-
-                audio.pause();
-
-                audio.currentTime = 0;
-
-                this.classList.remove("playing");
-
-                article.querySelector(".progress").style.width = "0%";
-
-                return;
-            }
-
-
-            // ---------------------------------------------
-            // Σταματάμε οποιοδήποτε άλλο MP3
-
-            document.querySelectorAll("audio").forEach(other => {
-
-                other.pause();
-
-                other.currentTime = 0;
-
-            });
-
-
-            // ---------------------------------------------
-            // Επαναφέρουμε όλους τους τίτλους
-
-            document.querySelectorAll(".audio-title").forEach(otherTitle => {
-
-                otherTitle.classList.remove("playing");
-
-            });
-
-
-            // ---------------------------------------------
-            // Αδειάζουμε όλες τις μπάρες
-
-            document.querySelectorAll(".progress").forEach(otherProgress => {
-
-                otherProgress.style.width = "0%";
-
-            });
-
-
-            // ---------------------------------------------
-            // Παίζουμε το συγκεκριμένο MP3
-
-            audio.play();
-
-            this.classList.add("playing");
-
-        });
-
-    });
+    audio.appendChild(source);
 
 
     // ---------------------------------------------
-    // Ενημέρωση της μπάρας όσο παίζει το MP3
+    // Προσθήκη στο άρθρο
 
-    document.querySelectorAll("audio").forEach(audio => {
+    article.appendChild(title);
 
-        audio.addEventListener("timeupdate", function () {
+    article.appendChild(progressBar);
 
-            const article = this.closest("article");
+    article.appendChild(audio);
 
-            const progress = article.querySelector(".progress");
+    container.appendChild(article);
 
-            if (this.duration) {
+});
 
-                const percentage =
-                    (this.currentTime / this.duration) * 100;
 
-                progress.style.width = percentage + "%";
+// ---------------------------------------------
+// Πάτημα στον τίτλο → play / stop
 
-            }
+document.querySelectorAll(".audio-title").forEach(title => {
+
+    title.addEventListener("click", function () {
+
+        const article = this.closest("article");
+
+        const audio = article.querySelector("audio");
+
+        const progressBar = article.querySelector(".progress-bar");
+
+
+        // ---------------------------------------------
+        // Αν αυτό το MP3 παίζει ήδη → STOP
+
+        if (!audio.paused) {
+
+            audio.pause();
+
+            audio.currentTime = 0;
+
+            this.classList.remove("playing");
+
+            article.querySelector(".progress").style.width = "0%";
+
+            // Κρύβουμε τη μπάρα
+            progressBar.style.display = "none";
+
+            return;
+        }
+
+
+        // ---------------------------------------------
+        // Σταματάμε οποιοδήποτε άλλο MP3
+
+        document.querySelectorAll("audio").forEach(other => {
+
+            other.pause();
+
+            other.currentTime = 0;
 
         });
 
 
         // ---------------------------------------------
-        // Όταν τελειώσει το MP3
+        // Επαναφέρουμε όλους τους τίτλους
 
-        audio.addEventListener("ended", function () {
+        document.querySelectorAll(".audio-title").forEach(otherTitle => {
 
-            const article = this.closest("article");
-
-            const title = article.querySelector(".audio-title");
-
-            title.classList.remove("playing");
-
-            article.querySelector(".progress").style.width = "100%";
+            otherTitle.classList.remove("playing");
 
         });
+
+
+        // ---------------------------------------------
+        // Αδειάζουμε και κρύβουμε όλες τις μπάρες
+
+        document.querySelectorAll(".progress-bar").forEach(otherBar => {
+
+            otherBar.style.display = "none";
+
+        });
+
+        document.querySelectorAll(".progress").forEach(otherProgress => {
+
+            otherProgress.style.width = "0%";
+
+        });
+
+
+        // ---------------------------------------------
+        // Παίζουμε το συγκεκριμένο MP3
+
+        audio.play();
+
+        this.classList.add("playing");
+
+        // Εμφανίζουμε τη μπάρα μόνο σε αυτό το άρθρο
+        progressBar.style.display = "block";
+
+    });
+
+});
+
+
+// ---------------------------------------------
+// Ενημέρωση της μπάρας όσο παίζει το MP3
+
+document.querySelectorAll("audio").forEach(audio => {
+
+    audio.addEventListener("timeupdate", function () {
+
+        const article = this.closest("article");
+
+        const progress = article.querySelector(".progress");
+
+        if (this.duration) {
+
+            const percentage =
+                (this.currentTime / this.duration) * 100;
+
+            progress.style.width = percentage + "%";
+
+        }
 
     });
 
 
     // ---------------------------------------------
-    // Οριζόντια κίνηση πάνω στο άρθρο
-    // Μετακίνηση σε οποιοδήποτε σημείο του MP3
+    // Όταν τελειώσει το MP3
 
-    document.querySelectorAll("article").forEach(article => {
+    audio.addEventListener("ended", function () {
 
-        article.addEventListener("touchmove", function (event) {
+        const article = this.closest("article");
 
-            const audio = article.querySelector("audio");
+        const title = article.querySelector(".audio-title");
 
+        title.classList.remove("playing");
 
-            // Λειτουργεί μόνο όταν παίζει
-            // το συγκεκριμένο MP3
-
-            if (audio.paused) return;
-
-
-            // Αν δεν γνωρίζουμε ακόμη τη διάρκεια
-
-            if (!audio.duration) return;
-
-
-            const touch = event.touches[0];
-
-            const rect = article.getBoundingClientRect();
-
-
-            // Θέση του δαχτύλου μέσα στο πλαίσιο
-
-            let position = touch.clientX - rect.left;
-
-
-            // Ποσοστό της οριζόντιας θέσης
-
-            let percentage = position / rect.width;
-
-
-            // Περιορισμός από 0 έως 1
-
-            percentage = Math.max(
-                0,
-                Math.min(1, percentage)
-            );
-
-
-            // Μετακίνηση στο αντίστοιχο σημείο του MP3
-
-            audio.currentTime =
-                audio.duration * percentage;
-
-
-            // ---------------------------------------------
-            // Ενημέρωση της μπάρας αμέσως
-
-            const progress =
-                article.querySelector(".progress");
-
-            progress.style.width =
-                (percentage * 100) + "%";
-
-        }, { passive: true });
+        // Η μπάρα παραμένει ορατή και γεμάτη
+        article.querySelector(".progress").style.width = "100%";
 
     });
 
+});
+
+
+// ---------------------------------------------
+// Οριζόντια κίνηση πάνω στο άρθρο
+// Μετακίνηση σε οποιοδήποτε σημείο του MP3
+document.querySelectorAll("article").forEach(article => {
+    article.addEventListener("touchmove", function (event) {
+        const audio = article.querySelector("audio");
+
+        // Λειτουργεί μόνο όταν παίζει
+        // το συγκεκριμένο MP3
+        if (audio.paused) return;
+
+        // Αν δεν γνωρίζουμε ακόμη τη διάρκεια
+        if (!audio.duration) return;
+        const touch = event.touches[0];
+        const rect = article.getBoundingClientRect();
+
+        // Θέση του δαχτύλου μέσα στο πλαίσιο
+        let position = touch.clientX - rect.left;
+
+        // Ποσοστό της οριζόντιας θέσης
+        let percentage = position / rect.width;
+
+        // Περιορισμός από 0 έως 1
+        percentage = Math.max(
+            0,
+            Math.min(1, percentage)
+        );
+
+        // Μετακίνηση στο αντίστοιχο σημείο του MP3
+        audio.currentTime =
+            audio.duration * percentage;
+
+        // ---------------------------------------------
+        // Ενημέρωση της μπάρας αμέσως
+        const progress =
+            article.querySelector(".progress");
+        progress.style.width =
+            (percentage * 100) + "%";
+    }, { passive: true });
+});
 });
